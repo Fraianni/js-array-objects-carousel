@@ -56,7 +56,10 @@ const images_array_object = [
 let activeIndex = 0;
 buildCarousel(images_array_object, activeIndex);
 
-let idInterval = setInterval(moveCarouselForward, CHANGE_IMAGE_DELAY * 1000);
+let back = 0;
+let idInterval = setInterval(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
+// let inverseInterval = setInterval(moveCarouselPrevious, CHANGE_IMAGE_DELAY * 1000);
+
 
 const leftArrowButton = document.getElementById('left-arrow');
 const rightArrowButton = document.getElementById('right-arrow');
@@ -66,6 +69,21 @@ leftArrowButton.addEventListener('click', moveCarouselPrevious);
 
 rightArrowButton.addEventListener('click', moveCarouselForward);
 
+let btn = document.createElement("button");
+btn.className = 'invert-btn';
+btn.innerHTML = "Inverti direzione scorrimento";
+document.getElementById('contenitore').appendChild(btn);
+
+btn.addEventListener('click', function () {
+    clearInterval(idInterval);
+
+    if (back === 0) {
+        back = 1;
+    }
+    else {
+        back = 0;
+    }
+})
 
 
 
@@ -75,7 +93,7 @@ function moveCarouselForward() {
     // se l'indice si trova in fondo allora lo riposizione all'inizio dell'array
     activeIndex = activeIndex < images_array_object.length - 1 ? activeIndex + 1 : 0;
     buildCarousel(images_array_object, activeIndex);
-    idInterval = setInterval(moveCarouselForward, CHANGE_IMAGE_DELAY * 1000);
+    idInterval = setInterval(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
 }
 
 function moveCarouselPrevious() {
@@ -83,7 +101,7 @@ function moveCarouselPrevious() {
     // se l'indice è in prima posizione si valorizza all'ultima posizione dell'array
     activeIndex = activeIndex > 0 ? activeIndex - 1 : images_array_object.length - 1;
     buildCarousel(images_array_object, activeIndex);
-    idInterval = setInterval(moveCarouselForward, CHANGE_IMAGE_DELAY * 1000);
+    idInterval = setInterval(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
 }
 
 
@@ -94,14 +112,20 @@ function buildCarousel(objects, activeIndex) {
     let thumb_content = '';
     for (let i = 0; i < objects.length; i++) {
         const object = objects[i];
-        const imageClass = i === activeIndex ? 'carousel-img active' : 'carousel-img'
-        content += `<img class="${imageClass}" src="${object.url}" alt="${object.title}" /> <div class="img-description"> <h1> ${object.title} </h1> </div>`;
-        thumb_content += `<img class="${imageClass}" src="${object.url}" alt="${object.title}" />`;
+        const imageClass = i === activeIndex ? 'active' : ' ';
+        content += `<img class=" carousel-img ${imageClass}" src="${object.url}" alt="${object.title}" /> <div class="img-description  ${imageClass}"> <h1> ${object.title} </h1> <p> ${object.description} </p> </div>`;
+        thumb_content += `<img class="carousel-img ${imageClass}" src="${object.url}" alt="${object.title}" />`;
 
     }
     // console.log({content});
     carouselImages.innerHTML = content;
     carouselThumbs.innerHTML = thumb_content;
+}
+
+function forward_or_previous(back) {
+
+    return back === 0 ? moveCarouselForward : moveCarouselPrevious;
+
 }
 
 
