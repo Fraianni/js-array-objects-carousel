@@ -91,14 +91,17 @@ function buildCarousel(objects, activeIndex) {
     const carouselImages = document.querySelector('.carousel-images');
     const carouselThumbs = document.querySelector('.carousel-thumbs');
     let content = '';
+    let thumb_content = '';
     for (let i = 0; i < objects.length; i++) {
         const object = objects[i];
         const imageClass = i === activeIndex ? 'carousel-img active' : 'carousel-img'
-        content += `<img class="${imageClass}" src="${object.url}" alt="${object.title}" />`;
+        content += `<img class="${imageClass}" src="${object.url}" alt="${object.title}" /> <div class="img-description"> <h1> ${object.title} </h1> </div>`;
+        thumb_content += `<img class="${imageClass}" src="${object.url}" alt="${object.title}" />`;
+
     }
     // console.log({content});
     carouselImages.innerHTML = content;
-    carouselThumbs.innerHTML = content;
+    carouselThumbs.innerHTML = thumb_content;
 }
 
 
