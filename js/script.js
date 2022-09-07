@@ -58,7 +58,6 @@ buildCarousel(images_array_object, activeIndex);
 
 let back = 0;
 let idInterval = setInterval(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
-// let inverseInterval = setInterval(moveCarouselPrevious, CHANGE_IMAGE_DELAY * 1000);
 
 
 const leftArrowButton = document.getElementById('left-arrow');
@@ -75,21 +74,30 @@ btn.innerHTML = "Inverti direzione scorrimento";
 document.getElementById('contenitore').appendChild(btn);
 
 btn.addEventListener('click', function () {
-    clearInterval(idInterval);
+    // clearInterval(idInterval);
+    // console.log(back);
 
     if (back === 0) {
         back = 1;
+        console.log(back);
+
+
     }
-    else {
+    else if (back === 1) {
         back = 0;
+
     }
+
+    // setInterval(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
+
 })
 
 
 
 
+
 function moveCarouselForward() {
-    clearInterval(idInterval)
+    clearInterval(idInterval);
     // se l'indice si trova in fondo allora lo riposizione all'inizio dell'array
     activeIndex = activeIndex < images_array_object.length - 1 ? activeIndex + 1 : 0;
     buildCarousel(images_array_object, activeIndex);
@@ -97,7 +105,7 @@ function moveCarouselForward() {
 }
 
 function moveCarouselPrevious() {
-    clearInterval(idInterval)
+    clearInterval(idInterval);
     // se l'indice è in prima posizione si valorizza all'ultima posizione dell'array
     activeIndex = activeIndex > 0 ? activeIndex - 1 : images_array_object.length - 1;
     buildCarousel(images_array_object, activeIndex);
