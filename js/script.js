@@ -56,7 +56,7 @@ const images_array_object = [
 let activeIndex = 0;
 buildCarousel(images_array_object, activeIndex);
 
-let back = 0;
+let back = false;
 let idInterval = setInterval(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
 
 
@@ -75,22 +75,9 @@ document.getElementById('contenitore').appendChild(btn);
 
 
 btn.addEventListener('click', function () {
-    // console.log(back);
     clearInterval(idInterval);
-
-
-    if (back === 0) {
-        back = 1;
-        console.log(back);
-
-    }
-    else if (back === 1) {
-        back = 0;
-    }
-
-    // setInterval(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
+    back = !back;
     idInterval = setTimeout(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
-
 })
 
 
@@ -133,7 +120,7 @@ function buildCarousel(objects, activeIndex) {
 
 function forward_or_previous(back) {
 
-    return back === 0 ? moveCarouselForward : moveCarouselPrevious;
+    return back === false ? moveCarouselForward : moveCarouselPrevious;
 
 }
 
