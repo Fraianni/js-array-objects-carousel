@@ -73,22 +73,23 @@ btn.className = 'invert-btn';
 btn.innerHTML = "Inverti direzione scorrimento";
 document.getElementById('contenitore').appendChild(btn);
 
+
 btn.addEventListener('click', function () {
-    // clearInterval(idInterval);
     // console.log(back);
+    clearInterval(idInterval);
+
 
     if (back === 0) {
         back = 1;
         console.log(back);
 
-
     }
     else if (back === 1) {
         back = 0;
-
     }
 
     // setInterval(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
+    idInterval = setTimeout(forward_or_previous(back), CHANGE_IMAGE_DELAY * 1000);
 
 })
 
